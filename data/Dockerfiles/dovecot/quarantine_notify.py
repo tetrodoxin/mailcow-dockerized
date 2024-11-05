@@ -3,11 +3,10 @@
 import smtplib
 import os
 import sys
-import mysql.connector
+import MySQLdb
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
-import cgi
 import jinja2
 from jinja2 import Template
 import json
@@ -50,7 +49,7 @@ try:
   def query_mysql(query, headers = True, update = False):
     while True:
       try:
-        cnx = mysql.connector.connect(unix_socket = '/var/run/mysqld/mysqld.sock', user=os.environ.get('DBUSER'), passwd=os.environ.get('DBPASS'), database=os.environ.get('DBNAME'), charset="utf8")
+        cnx = MySQLdb.connect(user=os.environ.get('DBUSER'), password=os.environ.get('DBPASS'), database=os.environ.get('DBNAME'), charset="utf8mb4", collation="utf8mb4_general_ci")
       except Exception as ex:
         print('%s - trying again...'  % (ex))
         time.sleep(3)
@@ -161,7 +160,7 @@ try:
       attrs = json.loads(attrs.decode('utf-8'))
     if attrs['quarantine_notification'] not in ('hourly', 'daily', 'weekly'):
       continue
-    if last_notification == 0 or (last_notification + time_trans[attrs['quarantine_notification']]) < time_now:
+    if last_notification == 0 or (last_notification + time_trans[attrs['quarantine_notification']]) <= time_now:
       print("Notifying %s: Considering %d new items in quarantine (policy: %s)" % (record['rcpt'], record['counter'], attrs['quarantine_notification']))
       notify_rcpt(record['rcpt'], record['counter'], record['quarantine_acl'], attrs['quarantine_category'])
 

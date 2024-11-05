@@ -13,6 +13,7 @@ data/conf/dovecot/acl_anyone
 data/conf/dovecot/dovecot-master.passwd
 data/conf/dovecot/dovecot-master.userdb
 data/conf/dovecot/extra.conf
+data/conf/dovecot/mail_replica.conf
 data/conf/dovecot/global_sieve_*
 data/conf/dovecot/last_login
 data/conf/dovecot/lua
@@ -36,6 +37,8 @@ data/conf/postfix/extra.cf
 data/conf/postfix/sni.map
 data/conf/postfix/sni.map.db
 data/conf/postfix/sql
+data/conf/postfix/dns_blocklists.cf
+data/conf/postfix/dnsbl_reply.map
 data/conf/rspamd/custom/*
 data/conf/rspamd/local.d/*
 data/conf/rspamd/override.d/*
@@ -56,6 +59,7 @@ data/web/templates/cache/*
 data/web/.well-known/acme-challenge
 data/web/css/build/0081-custom-mailcow.css
 data/web/inc/vars.local.inc.php
+data/web/inc/app_info.inc.php
 data/web/nextcloud*/
 data/web/rc*/
 docker-compose.override.yml
